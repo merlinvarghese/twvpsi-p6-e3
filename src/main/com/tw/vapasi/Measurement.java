@@ -43,7 +43,7 @@ public class Measurement {
             cm = measurement.value * 10000;
             return cm;
         }
-        return cm = measurement.value;
+        return measurement.value;
     }
 
     @Override
