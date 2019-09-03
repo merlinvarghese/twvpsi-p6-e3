@@ -2,12 +2,12 @@ package com.tw.vapasi;
 
 import org.junit.jupiter.api.Test;
 
-import static com.tw.vapasi.Distance.cms;
-import static com.tw.vapasi.Distance.meter;
-import static com.tw.vapasi.Distance.km;
+import static com.tw.vapasi.UnitMeasurement.cms;
+import static com.tw.vapasi.UnitMeasurement.meter;
+import static com.tw.vapasi.UnitMeasurement.km;
 import static org.junit.jupiter.api.Assertions.*;
 
-class DistanceTest {
+class UnitMeasurementTest {
     @Test
     void expect100CmEquals100cm() {
         assertEquals(cms(100), cms(100));
