@@ -18,7 +18,7 @@ class UnitTest {
     }
 
     @Test
-    void shouldConvertCMToBase() {
+    void shouldConvertCMToCM() {
         double actual = Unit.CM.convertToBaseUnit(5);
         assertEquals(5, actual);
     }
@@ -27,6 +27,12 @@ class UnitTest {
     void shouldConvertKGToBase() {
         double actual = Unit.KG.convertToBaseUnit(2);
         assertEquals(2000, actual);
+    }
+
+    @Test
+    void shouldConvertGMToGM() {
+        double actual = Unit.GM.convertToBaseUnit(1);
+        assertEquals(1, actual);
     }
 
 }

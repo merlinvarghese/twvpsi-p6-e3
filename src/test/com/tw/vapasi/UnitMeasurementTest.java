@@ -2,9 +2,7 @@ package com.tw.vapasi;
 
 import org.junit.jupiter.api.Test;
 
-import static com.tw.vapasi.UnitMeasurement.cms;
-import static com.tw.vapasi.UnitMeasurement.meter;
-import static com.tw.vapasi.UnitMeasurement.km;
+import static com.tw.vapasi.UnitMeasurement.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UnitMeasurementTest {
@@ -56,5 +54,20 @@ class UnitMeasurementTest {
     @Test
     void expectFalseWhenOneObjectIsNull() {
         assertFalse(cms(30).equals(null));
+    }
+    @Test
+    void expectTrueWhen1KGIs1000G (){
+        assertTrue(kg(1).equals(gram(1000)));
+
+    }
+
+    @Test
+    void expectFalseWhen10KGIs1000G (){
+        assertFalse(kg(10).equals(gram(1000)));
+    }
+
+    @Test
+    void expectFalseWhen1KGIs1KM (){
+        assertFalse(kg(1).equals(km(1)));
     }
 }

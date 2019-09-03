@@ -19,6 +19,13 @@ class UnitMeasurement {
         return new UnitMeasurement(magnitude, Unit.M);
     }
 
+    static UnitMeasurement kg(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.KG);
+    }
+
+    static UnitMeasurement gram(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.GM);
+    }
     private UnitMeasurement(double value, Unit unit) {
 
         this.value = value;
