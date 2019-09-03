@@ -3,7 +3,7 @@ package com.tw.vapasi;
 import java.util.Objects;
 
 //Understands metrics of different units.
-class UnitMeasurement {
+class Measurement {
     private final double value;
     private final Unit unit;
     private final MeasurementType measurementType;
@@ -13,26 +13,27 @@ class UnitMeasurement {
         LENGTH;
     }
 
-    static UnitMeasurement cms(int magnitude) {
-        return new UnitMeasurement(magnitude, Unit.CM, MeasurementType.LENGTH);
+    static Measurement cms(int magnitude) {
+        return new Measurement(magnitude, Unit.CM, MeasurementType.LENGTH);
     }
 
-    static UnitMeasurement km(int magnitude) {
-        return new UnitMeasurement(magnitude, Unit.KM,MeasurementType.LENGTH);
+    static Measurement km(int magnitude) {
+        return new Measurement(magnitude, Unit.KM, MeasurementType.LENGTH);
     }
 
-    static UnitMeasurement meter(int magnitude) {
-        return new UnitMeasurement(magnitude, Unit.M,MeasurementType.LENGTH);
+    static Measurement meter(int magnitude) {
+        return new Measurement(magnitude, Unit.M, MeasurementType.LENGTH);
     }
 
-    static UnitMeasurement kg(int magnitude) {
-        return new UnitMeasurement(magnitude, Unit.KG, MeasurementType.WEIGHT);
+    static Measurement kg(int magnitude) {
+        return new Measurement(magnitude, Unit.KG, MeasurementType.WEIGHT);
     }
 
-    static UnitMeasurement gram(int magnitude) {
-        return new UnitMeasurement(magnitude, Unit.GM, MeasurementType.WEIGHT);
+    static Measurement gram(int magnitude) {
+        return new Measurement(magnitude, Unit.GM, MeasurementType.WEIGHT);
     }
-    private UnitMeasurement(double value, Unit unit,MeasurementType measurementType) {
+
+    private Measurement(double value, Unit unit, MeasurementType measurementType) {
 
         this.value = value;
         this.unit = unit;
@@ -47,12 +48,16 @@ class UnitMeasurement {
         if ((otherObject == null) || (this.getClass() != otherObject.getClass())) {
             return false;
         }
-        UnitMeasurement otherMeasurement = (UnitMeasurement) otherObject;
+        Measurement otherMeasurement = (Measurement) otherObject;
         if (isDifferentMeasurementType(otherMeasurement)) {
             return false;
         }
 
         return this.convertToBase() == otherMeasurement.convertToBase();
+    }
+
+    private boolean isDifferentMeasurementType(Measurement otherMeasurement) {
+        return !this.measurementType.equals(otherMeasurement.measurementType);
     }
 
     private double convertToBase() {

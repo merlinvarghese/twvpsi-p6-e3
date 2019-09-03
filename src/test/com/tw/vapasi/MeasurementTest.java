@@ -2,10 +2,10 @@ package com.tw.vapasi;
 
 import org.junit.jupiter.api.Test;
 
-import static com.tw.vapasi.UnitMeasurement.*;
+import static com.tw.vapasi.Measurement.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class UnitMeasurementTest {
+class MeasurementTest {
     @Test
     void expect100CmEquals100cm() {
         assertEquals(cms(100), cms(100));
@@ -69,6 +69,16 @@ class UnitMeasurementTest {
     @Test
     void expectFalseWhen1KGIs1KM (){
         assertFalse(cms(1).equals(gram(1)));
+    }
+
+    @Test
+    void expect5000MeterNotEquals5Km() {
+        assertNotEquals(meter(7000), km(8));
+    }
+
+    @Test
+    void expect1KgNotEquals1Km() {
+        assertFalse(meter(10).equals(gram(1000)));
     }
 
 }
