@@ -21,26 +21,10 @@ class Distance {
         return new Distance(magnitude, Unit.M);
     }
 
-    enum Unit {
-        KM,
-        CM,
-        M
-    }
-
     Distance(double value, Unit unit) {
+
         this.value = value;
         this.unit = unit;
-    }
-
-    private double convertToCms() {
-        switch (this.unit) {
-            case M:
-                return this.value * M_IN_CMS;
-            case KM:
-                return this.value * KMS_IN_CMS;
-            default:
-                return this.value;
-        }
     }
 
     @Override
@@ -52,7 +36,11 @@ class Distance {
             return false;
         }
         Distance otherDistance = (Distance) otherObject;
-        return this.convertToCms() == otherDistance.convertToCms();
+        return this.convertToBase() == otherDistance.convertToBase();
+    }
+
+    private double convertToBase() {
+        return this.unit.convertToCms(this.value);
     }
 
     @Override

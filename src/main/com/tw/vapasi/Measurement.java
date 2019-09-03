@@ -16,6 +16,7 @@ public class Measurement {
     public boolean equals(Object obj) {
 
         if ((obj != null) && obj instanceof Measurement) {
+
             switch (((Measurement) obj).units) {
                 case "METER":
                     if (((Measurement) obj).units.equals("METER") && this.units.equals("CM"))
