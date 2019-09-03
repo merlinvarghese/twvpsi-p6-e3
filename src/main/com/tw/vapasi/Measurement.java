@@ -2,54 +2,65 @@ package com.tw.vapasi;
 
 import java.util.Objects;
 
-public class Measurement {
+//Understands metrics of different units.
+class UnitMeasurement {
+    private final double value;
+    private final Unit unit;
+    private final MeasurementType measurementType;
 
-    private double value;
-    private String units;
+    enum MeasurementType {
+        WEIGHT,
+        LENGTH;
+    }
 
-    Measurement(double value, String units) {
+    static UnitMeasurement cms(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.CM, MeasurementType.LENGTH);
+    }
+
+    static UnitMeasurement km(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.KM,MeasurementType.LENGTH);
+    }
+
+    static UnitMeasurement meter(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.M,MeasurementType.LENGTH);
+    }
+
+    static UnitMeasurement kg(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.KG, MeasurementType.WEIGHT);
+    }
+
+    static UnitMeasurement gram(int magnitude) {
+        return new UnitMeasurement(magnitude, Unit.GM, MeasurementType.WEIGHT);
+    }
+    private UnitMeasurement(double value, Unit unit,MeasurementType measurementType) {
+
         this.value = value;
-        this.units = units;
+        this.unit = unit;
+        this.measurementType = measurementType;
     }
 
-
-    public boolean equals(Object obj) {
-
-        if ((obj != null) && obj instanceof Measurement) {
-
-            switch (((Measurement) obj).units) {
-                case "METER":
-                    if (((Measurement) obj).units.equals("METER") && this.units.equals("CM"))
-                        if (this.value == 100 && ((Measurement) obj).value == 1) {
-                            return true;
-                        }
-
-                case "KM":
-                    if (((Measurement) obj).units.equals("KM") && this.units.equals("CM"))
-                        if (this.value == 2000 && ((Measurement) obj).value == 2) {
-                            return true;
-                        }
-            }
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) {
+            return true;
         }
-        return false;
+        if ((otherObject == null) || (this.getClass() != otherObject.getClass())) {
+            return false;
+        }
+        UnitMeasurement otherMeasurement = (UnitMeasurement) otherObject;
+        if (isDifferentMeasurementType(otherMeasurement)) {
+            return false;
+        }
+
+        return this.convertToBase() == otherMeasurement.convertToBase();
     }
 
-    double convert(Measurement measurement) {
-        double cm;
-        if (measurement.units.equals("METER")) {
-            cm = measurement.value * 100;
-            return cm;
-        }
-        if (measurement.units.equals("KM")) {
-            cm = measurement.value * 10000;
-            return cm;
-        }
-        return measurement.value;
+    private double convertToBase() {
+        return this.unit.convertToBaseUnit(this.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value, units);
+        return Objects.hashCode(this.unit.hashCode() + this.value);
     }
-
 }
