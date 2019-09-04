@@ -8,9 +8,19 @@ class Measurement {
     private final Unit unit;
     private final MeasurementType measurementType;
 
+    private double convertedValue = 0.0;
+    private double finalValue = 0.0;
+
     enum MeasurementType {
         WEIGHT,
         LENGTH;
+    }
+
+     Measurement(double value, Unit unit, MeasurementType measurementType) {
+
+        this.value = value;
+        this.unit = unit;
+        this.measurementType = measurementType;
     }
 
     static Measurement cms(int magnitude) {
@@ -33,13 +43,6 @@ class Measurement {
         return new Measurement(magnitude, Unit.GM, MeasurementType.WEIGHT);
     }
 
-    private Measurement(double value, Unit unit, MeasurementType measurementType) {
-
-        this.value = value;
-        this.unit = unit;
-        this.measurementType = measurementType;
-    }
-
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -58,6 +61,22 @@ class Measurement {
 
     private boolean isDifferentMeasurementType(Measurement otherMeasurement) {
         return !this.measurementType.equals(otherMeasurement.measurementType);
+    }
+
+    Measurement addTo(Object otherObject) throws cannotAddException {
+        Measurement otherMeasurement = (Measurement) otherObject;
+        if (this.measurementType != otherMeasurement.measurementType) {
+            throw new cannotAddException("can not add different ..");
+        }
+        convertedValue = convertToOther(this,otherMeasurement);
+        return new Measurement(convertedValue + this.value, this.unit,this.measurementType);
+    }
+
+    private double convertToOther(Measurement measurement, Measurement otherMeasurement) {
+        if(measurement.unit.getConversionFactor() > otherMeasurement.unit.getConversionFactor()) {
+            return this.unit.convertToOtherUnit(otherMeasurement.value);
+        }
+        return otherMeasurement.unit.convertToBaseUnit(otherMeasurement.value);
     }
 
     private double convertToBase() {

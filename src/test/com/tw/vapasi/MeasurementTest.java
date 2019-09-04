@@ -1,5 +1,6 @@
 package com.tw.vapasi;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static com.tw.vapasi.Measurement.*;
@@ -58,7 +59,6 @@ class MeasurementTest {
     @Test
     void expectTrueWhen1KGIs1000G (){
         assertTrue(kg(1).equals(gram(1000)));
-
     }
 
     @Test
@@ -81,4 +81,37 @@ class MeasurementTest {
         assertFalse(meter(10).equals(gram(1000)));
     }
 
+    @Test
+    void expect300CMForInput100CMPlus2M()throws Exception {
+        Measurement measurement = new Measurement(100,Unit.CM,MeasurementType.LENGTH);
+        Measurement othermeasurement = new Measurement(2,Unit.M,MeasurementType.LENGTH);
+        assertEquals(300.0,measurement.addTo(othermeasurement));
+    }
+
+    @Test
+    void expect2Point2ForInput2KGPlus200GM() throws Exception {
+        Measurement measurement = new Measurement(2,Unit.KG,MeasurementType.LENGTH);
+        Measurement othermeasurement = new Measurement(200,Unit.GM,MeasurementType.LENGTH);
+        assertEquals(2.2,measurement.addTo(othermeasurement));
+    }
+
+    @Test
+    void expectFalseWhenInputIs100CMPlus100GM() throws Exception {
+        Measurement measurement = new Measurement(100,Unit.CM,MeasurementType.LENGTH);
+        Measurement othermeasurement = new Measurement(100,Unit.GM,MeasurementType.WEIGHT);
+        assertEquals(0.0,measurement.addTo(othermeasurement));
+    }
+
+    @Test
+    void expectFalseWhenInputIs100CMPlus100KG()  {
+        Measurement measurement = new Measurement(100,Unit.CM,MeasurementType.LENGTH);
+        Measurement othermeasurement = new Measurement(100,Unit.KG,MeasurementType.WEIGHT);
+        try {
+            measurement.addTo(othermeasurement);
+            Assertions.fail("Failed");
+        }
+        catch(Exception exception){
+
+        }
+    }
 }
